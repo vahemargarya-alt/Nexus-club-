@@ -11,7 +11,7 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
-// Автоматическое создание таблицы
+// Ստեղծում ենք աղյուսակը
 pool.query(`
   CREATE TABLE IF NOT EXISTS members (
     id SERIAL PRIMARY KEY,
@@ -25,7 +25,7 @@ pool.query(`
   console.error("Error creating table:", err);
 });
 
-// Главная страница с формой
+// Գլխավոր էջ՝ գրանցման ձևաթղթով
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -58,9 +58,11 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Обработка регистрации с выводом реальной ошибки, если она есть
+// Գրանցման պրոցես
 app.post('/register', async (req, res) => {
   const { name, email } = req.body;
+  console.log("Received registration attempt for:", name, email);
+  
   try {
     await pool.query('INSERT INTO members (name, email) VALUES ($1, $2)', [name, email]);
     res.send(`
@@ -71,18 +73,18 @@ app.post('/register', async (req, res) => {
       </div>
     `);
   } catch (err) {
-    console.error("Registration error details:", err.message);
+    console.error("Database Insert Error:", err.message);
     res.send(`
-      <div style="font-family: Arial; text-align: center; margin-top: 50px;">
+      <div style="font-family: Arial; text-align: center; margin-top: 50px; padding: 20px;">
         <h2 style="color: red;">Registration Failed</h2>
-        <p><strong>Error:</strong> ${err.message}</p>
+        <p><strong>Սխալ:</strong> ${err.message}</p>
         <a href="/">Try Again</a>
       </div>
     `);
   }
 });
 
-// Страница списка участников
+// Անդամների ցանկ
 app.get('/members', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM members ORDER BY id DESC');
