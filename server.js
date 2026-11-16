@@ -11,7 +11,7 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
-// Ստեղծում ենք աղյուսակը, եթե չկա
+// Автоматическое создание таблицы
 pool.query(`
   CREATE TABLE IF NOT EXISTS members (
     id SERIAL PRIMARY KEY,
@@ -25,7 +25,7 @@ pool.query(`
   console.error("Error creating table:", err);
 });
 
-// Գլխավոր էջ՝ պարզ գրանցման ձևաթղթով (HTML)
+// Главная страница с формой
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Գրանցման մշակում (POST հարցում)
+// Обработка регистрации с выводом реальной ошибки, если она есть
 app.post('/register', async (req, res) => {
   const { name, email } = req.body;
   try {
@@ -71,18 +71,18 @@ app.post('/register', async (req, res) => {
       </div>
     `);
   } catch (err) {
-    console.error(err);
+    console.error("Registration error details:", err.message);
     res.send(`
       <div style="font-family: Arial; text-align: center; margin-top: 50px;">
         <h2 style="color: red;">Registration Failed</h2>
-        <p>This email might already be registered or database error occurred.</p>
+        <p><strong>Error:</strong> ${err.message}</p>
         <a href="/">Try Again</a>
       </div>
     `);
   }
 });
 
-// Անդամների ցանկը (JSON կամ HTML ցուցադրություն)
+// Страница списка участников
 app.get('/members', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM members ORDER BY id DESC');
@@ -91,25 +91,28 @@ app.get('/members', async (req, res) => {
         <h2>Nexus Club Members</h2>
         <ul style="list-style: none; padding: 0;">
     `;
-    result.rows.forEach(m => {
-      html += `<li style="background: #fff; margin-bottom: 10px; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <strong>${m.name}</strong> (${m.email}) <br><small style="color: gray;">Joined: ${m.created_at}</small>
-               </li>`;
-    });
+    if (result.rows.length === 0) {
+      html += `<p>No members registered yet.</p>`;
+    } else {
+      result.rows.forEach(m => {
+        html += `<li style="background: #fff; margin-bottom: 10px; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                  <strong>${m.name}</strong> (${m.email}) <br><small style="color: gray;">Joined: ${m.created_at}</small>
+                 </li>`;
+      });
+    }
     html += `
         </ul>
+        <br>
         <a href="/">Home Page</a>
       </div>
     `;
     res.send(html);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Database error');
+    res.status(500).send('Database error: ' + err.message);
   }
 });
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-
