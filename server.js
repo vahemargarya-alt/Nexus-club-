@@ -27,7 +27,7 @@ pool.query(`
   console.error("Error creating table:", err);
 });
 
-// 1. Գլխավոր էջ (Շքեղ, ինֆորմատիվ և բազմաշերտ նորարարական Լենդինգ)
+// 1. Գլխավոր էջ (Զուսպ և Էլեգանտ Գրանցման ձևաթուղթ)
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -35,92 +35,47 @@ app.get('/', (req, res) => {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Nexus Club - Կորպորատիվ բարեկեցության նոր ձևաչափ</title>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <title>Nexus Club - Էլեգանտ Անդամակցություն</title>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background: #070b12; color: #f8fafc; overflow-x: hidden; }
+        body { background-color: #f9fafb; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #1f2937; padding: 20px; }
+        .main-wrapper { width: 100%; max-width: 400px; }
         
-        /* Header / Nav */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: rgba(13, 19, 33, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #ffd700; letter-spacing: 1px; }
-        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 500; margin-left: 20px; transition: color 0.2s; }
-        .nav-links a:hover { color: #ffd700; }
+        /* Header / Brand */
+        .brand-header { text-align: center; margin-bottom: 40px; }
+        .brand-logo { font-size: 24px; font-weight: 600; color: #111827; letter-spacing: -0.5px; }
+        .brand-tagline { font-size: 14px; color: #6b7280; margin-top: 4px; }
 
-        /* Hero Section */
-        .hero { padding: 60px 20px; text-align: center; background: radial-gradient(circle at center, #131c2e 0%, #070b12 70%); border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 16px; line-height: 1.3; }
-        .hero h1 span { color: #ffd700; }
-        .hero p { color: #94a3b8; font-size: 16px; max-width: 600px; margin: 0 auto 30px auto; line-height: 1.6; }
-
-        /* Partners Bar */
-        .partners { display: flex; justify-content: center; gap: 30px; padding: 20px; background: #0b111e; border-bottom: 1px solid rgba(255,255,255,0.05); color: #64748b; font-size: 14px; font-weight: 600; flex-wrap: wrap; text-transform: uppercase; letter-spacing: 1px; }
-        .partners span { color: #cbd5e1; }
-
-        /* Content Sections */
-        .container { max-width: 1000px; margin: 0 auto; padding: 50px 20px; }
-        .grid-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 50px; }
-        .feature-box { background: #131c2e; border: 1px solid rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 16px; transition: transform 0.3s, border-color 0.3s; }
-        .feature-box:hover { transform: translateY(-4px); border-color: rgba(255, 215, 0, 0.3); }
-        .feature-box h3 { font-size: 18px; color: #ffd700; margin-bottom: 10px; font-weight: 600; }
-        .feature-box p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
-
-        /* Registration Form Section */
-        .reg-section { background: linear-gradient(135deg, #131c2e 0%, #0a101d 100%); border: 1px solid rgba(255, 215, 0, 0.2); padding: 40px; border-radius: 20px; max-width: 500px; margin: 0 auto 60px auto; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
-        .reg-section h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: #ffd700; margin-bottom: 10px; text-align: center; }
-        .reg-section p.sub { font-size: 14px; color: #94a3b8; text-align: center; margin-bottom: 25px; }
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-size: 13px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
-        input { width: 100%; padding: 14px 16px; background: #070b12; border: 1px solid #334155; border-radius: 10px; color: #fff; font-size: 15px; outline: none; }
-        input:focus { border-color: #ffd700; box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15); }
-        button { width: 100%; margin-top: 10px; background: linear-gradient(90deg, #b8860b 0%, #ffd700 100%); color: #070b12; border: none; padding: 16px; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: opacity 0.2s; }
-        button:hover { opacity: 0.9; }
+        /* Elegant Card */
+        .card { background: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03); }
+        h2 { font-size: 22px; font-weight: 500; color: #111827; margin-bottom: 12px; text-align: left; }
+        p.subtitle { color: #6b7280; font-size: 14px; text-align: left; margin-bottom: 30px; line-height: 1.5; }
+        
+        /* Form Elements */
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 500; color: #374151; margin-bottom: 8px; }
+        input { width: 100%; padding: 12px 14px; background: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; color: #111827; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        input:focus { border-color: #4f46e5; ring-1 ring-indigo-600; }
+        
+        /* Button - Subtle but premium */
+        button { width: 100%; margin-top: 10px; background-color: #111827; color: #ffffff; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: background-color 0.2s; }
+        button:hover { background-color: #374151; }
 
         /* Footer */
-        footer { text-align: center; padding: 30px; background: #05080e; color: #64748b; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-text { text-align: center; margin-top: 30px; font-size: 12px; color: #9ca3af; }
       </style>
     </head>
     <body>
-
-      <header>
-        <div class="logo">Nexus Club</div>
-        <div class="nav-links">
-          <a href="/admin">Ադմին Մուտք</a>
+      <div class="main-wrapper">
+        <div class="brand-header">
+          <div class="brand-logo">Nexus Club</div>
+          <div class="brand-tagline">Էլեգանտ Անդամակցություն</div>
         </div>
-      </header>
-
-      <section class="hero">
-        <h1>Կորպորատիվ բարեկեցության<br><span>նոր ձևաչափ</span></h1>
-        <p>Գրանցվե՛ք ընդամենը 8,000 դրամ/ամիս և ստացեք բացառիկ 10% զեղչ Yerevan City և MG սուպերմարկետներում։ Սա տեխնոլոգիական նորարարություն է ձեր առօրյայի համար։</p>
-      </section>
-
-      <div class="partners">
-        <span>Idram</span>
-        <span>IDBank</span>
-        <span>EasyPay</span>
-        <span>Yerevan City</span>
-        <span>MG Market</span>
-      </div>
-
-      <div class="container">
-        <div class="grid-features">
-          <div class="feature-box">
-            <h3>💎 Բացառիկ Արտոնություններ</h3>
-            <p>Անդամակցեք փակ համայնքին և խնայեք ձեր բյուջեն ամենօրյա գնումների ժամանակ:</p>
-          </div>
-          <div class="feature-box">
-            <h3>⚡ Անմիջապես Թվային Քարտ</h3>
-            <p>Գրանցվելուն պես ստացեք ձեր անհատական Nexus Card-ը՝ ակտիվ կարգավիճակով:</p>
-          </div>
-          <div class="feature-box">
-            <h3>🔒 Անվտանգության Բարձր Մակարդակ</h3>
-            <p>Ձեր տվյալները պաշտպանված են բանկային ստանդարտներին համապատասխան:</p>
-          </div>
-        </div>
-
-        <div class="reg-section" id="register">
-          <h2>Միացե՛ք Nexus Club-ին</h2>
-          <p class="sub">Լրացրեք տվյալները և ստացեք ձեր թվային անդամաքարտը</p>
+        
+        <div class="card">
+          <h2>Բարի գալուստ</h2>
+          <p class="subtitle">Լրացրեք ձեր տվյալները՝ 8,000 AMD/ամիս անդամակցությունը սկսելու և Yerevan City-ում ու MG-ում 10% զեղչ ստանալու համար։</p>
           <form action="/register" method="POST">
             <div class="form-group">
               <label>Անուն Ազգանուն</label>
@@ -130,21 +85,20 @@ app.get('/', (req, res) => {
               <label>Էլ. Հասցե (Email)</label>
               <input type="email" name="email" placeholder="example@gmail.com" required />
             </div>
-            <button type="submit">Ստանալ Nexus Card</button>
+            <button type="submit">Միանալ ակումբին</button>
           </form>
         </div>
+        
+        <div class="footer-text">
+            <p>© 2026 Nexus Club Technologies. Բոլոր իրավունքները պաշտպանված։</p>
+        </div>
       </div>
-
-      <footer>
-        <p>© 2026 Nexus Club Technologies. Բոլոր իրավունքները պաշտպանված են։</p>
-      </footer>
-
     </body>
     </html>
   `);
 });
 
-// 2. Գրանցման պրոցես և Nexus Card-ի էջ
+// 2. Գրանցման պրոցես և Nexus Card-ի նոր ոճը
 app.post('/register', async (req, res) => {
   const { name, email } = req.body;
   try {
@@ -156,43 +110,65 @@ app.post('/register', async (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nexus Card - Nexus Club</title>
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <title>Ձեր Nexus Card - Nexus Club</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
         <style>
           * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-          body { background: #070b12; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #f8fafc; padding: 20px; }
+          body { background-color: #f9fafb; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #1f2937; padding: 20px; }
           .container { width: 100%; max-width: 420px; }
-          .card-nexus { background: linear-gradient(135deg, #1e293b 0%, #070b12 100%); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.7); position: relative; }
-          .brand { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; letter-spacing: 2px; color: #ffd700; text-transform: uppercase; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
-          .status-badge { background: rgba(52, 211, 153, 0.15); color: #34d399; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; border: 1px solid rgba(52, 211, 153, 0.3); }
-          .member-name { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-          .member-email { font-size: 13px; color: #94a3b8; margin-bottom: 25px; }
-          .perks { background: rgba(11, 17, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); padding: 18px; border-radius: 12px; margin-bottom: 25px; }
-          .perks p { font-size: 14px; color: #cbd5e1; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-          .perks p:last-child { margin-bottom: 0; }
-          .perks b { color: #ffd700; }
-          .footer-note { text-align: center; font-size: 12px; color: #64748b; line-height: 1.4; }
-          .btn-home { display: block; text-align: center; margin-top: 20px; background: #131c2e; color: #e2e8f0; text-decoration: none; padding: 14px; border-radius: 10px; font-size: 14px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); transition: background 0.2s; }
-          .btn-home:hover { background: #1e293b; }
+          
+          /* The Card - Clean & Professional */
+          .card-nexus { background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 35px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden; }
+          
+          /* Top header of the card */
+          .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+          .brand-text { font-size: 16px; font-weight: 600; color: #111827; }
+          .status-badge { background-color: #ecfdf5; color: #059669; padding: 4px 10px; border-radius: 9999px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+          
+          /* Member Info on Card */
+          .member-name { font-size: 22px; font-weight: 500; color: #111827; margin-bottom: 6px; }
+          .member-email { font-size: 13px; color: #6b7280; margin-bottom: 30px; }
+          
+          /* Perks Section on Card */
+          .perks-list { border-top: 1px solid #f3f4f6; padding-top: 25px; }
+          .perk-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #374151; margin-bottom: 10px; line-height: 1.5; }
+          .perk-item:last-child { margin-bottom: 0; }
+          .perk-icon { width: 16px; height: 16px; color: #4f46e5; }
+          .perk-value { font-weight: 600; color: #111827; }
+
+          /* Footer Note on Card */
+          .footer-card-note { text-align: center; font-size: 11px; color: #9ca3af; margin-top: 35px; }
+
+          /* Back button */
+          .btn-home { display: block; text-align: center; margin-top: 25px; background-color: transparent; color: #6b7280; text-decoration: none; padding: 12px; border-radius: 6px; font-size: 13px; transition: color 0.2s; border: 1px solid transparent; }
+          .btn-home:hover { color: #111827; border-color: #e5e7eb; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="card-nexus">
-            <div class="brand">
-              <span>Nexus Card</span>
+            <div class="card-header">
+              <div class="brand-text">Nexus Card</div>
               <span class="status-badge">● Ակտիվ</span>
             </div>
             <div class="member-name">${name}</div>
             <div class="member-email">${email}</div>
             
-            <div class="perks">
-              <p>🛍️ <b>10% Զեղչ</b> Yerevan City-ում</p>
-              <p>🛒 <b>10% Զեղչ</b> MG սուպերմարկետում</p>
-              <p>💎 <b>Անդամավճար:</b> 8,000 AMD / ամիս</p>
+            <div class="perks-list">
+              <p class="perk-item">
+                <svg class="perk-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                Yerevan City սուպերմարկետներում: <span class="perk-value">10% Զեղչ</span>
+              </p>
+              <p class="perk-item">
+                <svg class="perk-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                MG սուպերմարկետներում: <span class="perk-value">10% Զեղչ</span>
+              </p>
+              <p class="perk-item">
+                <svg class="perk-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                Անդամավճար: <span class="perk-value">8,000 AMD/ամիս</span>
+              </p>
             </div>
-
-            <div class="footer-note">Սա տեխնոլոգիական նորարարություն է։ Ցույց տվեք այս քարտը կասսայում զեղչից օգտվելու համար։</div>
+            <div class="footer-card-note">Ցույց տվեք այս թվային քարտը կասսայում զեղչից օգտվելու համար։</div>
           </div>
           <a href="/" class="btn-home">← Վերադառնալ գլխավոր էջ</a>
         </div>
@@ -200,26 +176,28 @@ app.post('/register', async (req, res) => {
       </html>
     `);
   } catch (err) {
+    // Սխալի էջը նույնպես նոր, զուսպ ոճով
     res.send(`
       <!DOCTYPE html>
       <html lang="hy">
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Սխալ</title>
+        <title>Սխալ - Nexus Club</title>
         <style>
           * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-          body { background: #070b12; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #f8fafc; padding: 20px; }
-          .card { background: #131c2e; border: 1px solid rgba(239, 68, 68, 0.3); padding: 40px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; }
-          h2 { color: #ef4444; font-size: 24px; margin-bottom: 12px; }
-          p { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }
-          a { background: #ef4444; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; display: inline-block; }
+          body { background-color: #f9fafb; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #1f2937; padding: 20px; }
+          .card { background: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid #e5e7eb; width: 100%; max-width: 400px; text-align: center; }
+          h2 { color: #dc2626; font-size: 20px; font-weight: 500; margin-bottom: 12px; }
+          p { color: #6b7280; font-size: 14px; margin-bottom: 30px; }
+          a { background-color: #dc2626; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; display: inline-block; }
+          a:hover { background-color: #b91c1c; }
         </style>
       </head>
       <body>
         <div class="card">
           <h2>Գրանցումը ձախողվեց</h2>
-          <p>Այս էլ. հասցեն արդեն գրանցված է համակարգում։</p>
+          <p>Այս էլ. հասցեն արդեն գրանցված է համակարգում, կամ տեղի է ունեցել տեխնիկական սխալ։</p>
           <a href="/">Կրկին փորձել</a>
         </div>
       </body>
@@ -228,30 +206,29 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// 3. Ադմինի Մուտքի Էջ
+// 3. Ադմինի Մուտքի Էջ (Զուսպ ոճով)
 app.get('/admin', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html lang="hy">
     <head>
       <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Admin Login - Nexus Club</title>
+      <title>Ադմին Մուտք - Nexus Club</title>
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background: #070b12; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #f8fafc; padding: 20px; }
-        .card { background: #131c2e; border: 1px solid rgba(255, 215, 0, 0.2); padding: 40px; border-radius: 20px; width: 100%; max-width: 380px; text-align: center; }
-        h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #ffd700; margin-bottom: 10px; }
-        p.subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
-        .form-group { margin-bottom: 16px; text-align: left; }
-        input { width: 100%; padding: 14px 16px; background: #070b12; border: 1px solid #334155; border-radius: 10px; color: #fff; font-size: 15px; outline: none; }
-        button { width: 100%; background: linear-gradient(90deg, #b8860b 0%, #ffd700 100%); color: #070b12; border: none; padding: 14px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 700; text-transform: uppercase; }
+        body { background-color: #f9fafb; min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #1f2937; padding: 20px; }
+        .card { background: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid #e5e7eb; width: 100%; max-width: 380px; text-align: center; }
+        h2 { font-size: 20px; font-weight: 500; color: #111827; margin-bottom: 12px; }
+        p.subtitle { color: #6b7280; font-size: 13px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        input { width: 100%; padding: 12px 14px; background: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+        button { width: 100%; background-color: #111827; color: #ffffff; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; }
       </style>
     </head>
     <body>
       <div class="card">
-        <h2>Ադմին Մուտք</h2>
-        <p class="subtitle">Մուտքագրեք գաղտնաբառը անդամների բազան տեսնելու համար</p>
+        <h2>Ադմինիստրատոր</h2>
+        <p class="subtitle">Մուտքագրեք գաղտնաբառը</p>
         <form action="/admin-dashboard" method="POST">
           <div class="form-group">
             <input type="password" name="password" placeholder="Գաղտնաբառ" required />
@@ -264,7 +241,7 @@ app.get('/admin', (req, res) => {
   `);
 });
 
-// 4. Ադմինի Գաղտնի Վահանակ
+// 4. Ադմինի Գաղտնի Վահանակ (Մաքուր ոճով)
 app.post('/admin-dashboard', async (req, res) => {
   const { password } = req.body;
 
@@ -277,16 +254,16 @@ app.post('/admin-dashboard', async (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Սխալ գաղտնաբառ</title>
         <style>
-          body { background: #070b12; color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
-          .error-box { text-align: center; background: #131c2e; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-          h2 { color: #ef4444; margin-bottom: 10px; }
-          a { color: #ffd700; text-decoration: none; font-weight: 600; }
+          body { background-color: #f9fafb; color: #1f2937; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
+          .error-box { text-align: center; background: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid #e5e7eb; }
+          h2 { color: #dc2626; margin-bottom: 10px; font-size: 20px; font-weight: 500; }
+          a { color: #4f46e5; text-decoration: none; font-size: 13px; }
         </style>
       </head>
       <body>
         <div class="error-box">
           <h2>Սխալ գաղտնաբառ!</h2>
-          <p><a href="/admin">← Վերադառնալ և կրկին փորձել</a></p>
+          <p><a href="/admin">← Վերադառնալ</a></p>
         </div>
       </body>
       </html>
@@ -298,14 +275,14 @@ app.post('/admin-dashboard', async (req, res) => {
     let rowsHtml = '';
     
     if (result.rows.length === 0) {
-      rowsHtml = `<tr><td colspan="3" style="text-align: center; color: #94a3b8; padding: 24px;">Դեռևս գրանցված անդամներ չկան։</td></tr>`;
+      rowsHtml = `<tr><td colspan="3" style="text-align: center; color: #9ca3af; padding: 24px; font-size: 13px;">Դեռևս գրանցված անդամներ չկան։</td></tr>`;
     } else {
       result.rows.forEach(m => {
         rowsHtml += `
-          <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <td style="padding: 14px 16px; color: #fff; font-weight: 500;">${m.name}</td>
-            <td style="padding: 14px 16px; color: #94a3b8;">${m.email}</td>
-            <td style="padding: 14px 16px; color: #64748b; font-size: 13px;">${new Date(m.created_at).toLocaleString()}</td>
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 16px; color: #111827; font-weight: 500; font-size: 13px;">${m.name}</td>
+            <td style="padding: 16px; color: #374151; font-size: 13px;">${m.email}</td>
+            <td style="padding: 16px; color: #6b7280; font-size: 12px;">${new Date(m.created_at).toLocaleString()}</td>
           </tr>
         `;
       });
@@ -317,26 +294,27 @@ app.post('/admin-dashboard', async (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nexus Club - Admin Panel</title>
+        <title>Nexus Club - Ադմին Վահանակ</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
         <style>
           * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-          body { background: #070b12; min-height: 100vh; padding: 40px 20px; color: #f8fafc; }
-          .container { max-width: 850px; margin: 0 auto; background: #131c2e; border: 1px solid rgba(255, 215, 0, 0.2); padding: 30px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.7); }
+          body { background-color: #f9fafb; min-height: 100vh; padding: 40px 20px; color: #1f2937; }
+          .container { max-width: 900px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e7eb; padding: 30px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
           .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-          h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #ffd700; }
-          a.back-btn { background: #070b12; color: #e2e8f0; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
+          h2 { font-size: 18px; font-weight: 600; color: #111827; }
+          a.back-btn { background-color: #f3f4f6; color: #374151; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; transition: background-color 0.2s; }
+          a.back-btn:hover { background-color: #e5e7eb; }
           table { width: 100%; border-collapse: collapse; text-align: left; }
-          th { background: #070b12; color: #cbd5e1; padding: 14px 16px; font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); text-transform: uppercase; }
-          .badge { background: rgba(52, 211, 153, 0.15); color: #34d399; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+          th { background-color: #f9fafb; color: #6b7280; padding: 16px; font-size: 11px; font-weight: 600; border-bottom: 1px solid #e5e7eb; text-transform: uppercase; letter-spacing: 0.5px; }
+          .badge { background-color: #ecfdf5; color: #059669; padding: 4px 10px; border-radius: 9999px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
-            <h2>Ադմին Վահանակ <span class="badge">SECURE</span></h2>
-            <a href="/admin" class="back-btn">Ելք (Log out)</a>
+            <h2>Անդամների Բազա <span class="badge">Secure</span></h2>
+            <a href="/admin" class="back-btn">Ելք</a>
           </div>
-          <p style="color: #94a3b8; font-size: 14px; margin-bottom: 25px;">Այս էջում պահպանվում են բոլոր գրանցված անդամների տվյալները։</p>
           <div style="overflow-x: auto;">
             <table>
               <thead>
